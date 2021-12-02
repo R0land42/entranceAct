@@ -18,11 +18,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     private EditText editTextLogin, editTextTextPassword;
     private DatabaseReference dUsers;
     private String usersRef = "Users";
     private TextView textView4;
+
 
 
     @Override
@@ -54,24 +58,45 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void searchLogin(String login, String password){
-        dUsers.orderByChild("users").equalTo(login).addValueEventListener(new ValueEventListener() {
+
+    public void searchLogin(String log, String passwr){
+        ValueEventListener vList = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String name = snapshot.child("login").getValue(String.class);
-                textView4.setText(name);
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    users users = ds.getValue(users.class);
+                    String zalupa = users.login;
+                    String penis = users.password;
+                    if (zalupa.equals(log)){
+                        if(penis.equals(passwr)){
+                            textView4.setText("Ну круто, здорово! " + zalupa + " " + penis + " ");
+                            break;
+                        }
+                        else{
+                            textView4.setText("Говно, неверный пароль! " + zalupa + " " + penis);
+                            break;
+                        }
+
+                    }
+                    else{
+                        textView4.setText("Говно, неверный логин " + zalupa + " " + penis);
+                        break;
+                    }
+
+
+                }
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
-
-
-
-
+        };
+        dUsers.addValueEventListener(vList);
     }
+
+
 
 
 }
