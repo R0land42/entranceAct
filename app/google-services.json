@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1077012634911",
+    "firebase_url": "https://kanbanboard-c892f-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "kanbanboard-c892f",
+    "storage_bucket": "kanbanboard-c892f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077012634911:android:1287659cb0b48c8393242a",
+        "android_client_info": {
+          "package_name": "com.example.entranceact"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1077012634911-i0prnq236nrh7bn995nk4frg5pnprvgd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3CphERGrpttNdAZjN64FEUe6pZnkZ_88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1077012634911-i0prnq236nrh7bn995nk4frg5pnprvgd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
