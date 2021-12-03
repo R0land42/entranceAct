@@ -16,8 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
     private EditText edTextlogin, edTextName, edTextPassword, edTextEmail;
-    private DatabaseReference dUsers;
-    private String usersRef = "Users";
+    private DatabaseReference dbUsers;
     private TextView textView3;
 
 
@@ -36,7 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
         edTextPassword = findViewById(R.id.edTextPassword);
         edTextEmail = findViewById(R.id.edTextEmail);
         textView3 = findViewById(R.id.textView3);
-        dUsers = FirebaseDatabase.getInstance().getReference(usersRef);
+        dbUsers = FirebaseDatabase.getInstance().getReference(Const.DB_USERS_REF);
     }
 
     public void onClickSignUp(View view){
@@ -46,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
         String email = edTextEmail.getText().toString();
         users NewUsers = new users(login, name, password, email);
         if (!TextUtils.isEmpty(login) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(email)){
-            dUsers.child(login).setValue(NewUsers);
+            dbUsers.child(login).setValue(NewUsers);
             textView3.setTextColor(Color.parseColor("#00FF00"));
             textView3.setText("Регистрация прошла успешно!");;
         }

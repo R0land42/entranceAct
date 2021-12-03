@@ -9,22 +9,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
-    private EditText editTextLogin, editTextTextPassword;
-    private DatabaseReference dUsers;
-    private String usersRef = "Users";
+    private EditText editTextLogin, editTextPassword;
+    private DatabaseReference dbUsers;
     private TextView textView4;
 
 
@@ -39,16 +32,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Init(){
-        editTextLogin = findViewById(R.id.editTextLogin1);
-        editTextTextPassword = findViewById(R.id.editTextTextPassword1);
-        dUsers = FirebaseDatabase.getInstance().getReference(usersRef);
+        editTextLogin = findViewById(R.id.editTextLogin);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        dbUsers = FirebaseDatabase.getInstance().getReference(Const.DB_USERS_REF);
         textView4 = findViewById(R.id.textView4);
     }
 
     public void onClickEnter(View view){
         String login = editTextLogin.getText().toString();
-        String password = editTextTextPassword.getText().toString();
-        searchLogin(login, password);
+        String password = editTextPassword.getText().toString();
+        textView4.setText("");
+        searchLoginAndPassword(login, password);
 
     }
 
@@ -59,28 +53,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void searchLogin(String log, String passwr){
+    public void searchLoginAndPassword(String log, String passwr){
         ValueEventListener vList = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()){
                     users users = ds.getValue(users.class);
-                    String zalupa = users.login;
-                    String penis = users.password;
-                    if (zalupa.equals(log)){
-                        if(penis.equals(passwr)){
-                            textView4.setText("Ну круто, здорово! " + zalupa + " " + penis + " ");
+                    String login = users.login;
+                    String password = users.password;
+                    String name = users.name;
+                    if (login.equals(log)){
+                        if(password.equals(passwr)){
+                            Intent intent = new Intent(MainActivity.this, MainMenu.class);
+                            intent.putExtra(Const.USER_NAME, name);
+                            startActivity(intent);
                             break;
                         }
                         else{
-                            textView4.setText("Говно, неверный пароль! " + zalupa + " " + penis);
-                            break;
+                            textView4.setTextColor(Color.parseColor("#FF0000"));
+                            textView4.setText("Неверный логин или пароль!");
                         }
 
                     }
                     else{
-                        textView4.setText("Говно, неверный логин " + zalupa + " " + penis);
-                        break;
+                        textView4.setTextColor(Color.parseColor("#FF0000"));
+                        textView4.setText("Неверный логин или пароль!");
                     }
 
 
@@ -93,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
-        dUsers.addValueEventListener(vList);
+        dbUsers.addValueEventListener(vList);
     }
 
 
