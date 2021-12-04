@@ -120,7 +120,8 @@
                 android:gravity="center"
                 android:hint="Пароль"
                 android:inputType="textPassword"
-                android:paddingBottom="5dp" />
+                android:paddingBottom="5dp"
+                android:password="false" />
         </TableRow>
 
         <TableRow

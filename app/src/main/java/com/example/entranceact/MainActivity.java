@@ -62,10 +62,14 @@ public class MainActivity extends AppCompatActivity {
                     String login = users.login;
                     String password = users.password;
                     String name = users.name;
+                    String email = users.email;
                     if (login.equals(log)){
                         if(password.equals(passwr)){
                             Intent intent = new Intent(MainActivity.this, MainMenu.class);
+                            intent.putExtra(Const.USER_LOGIN, login);
+                            intent.putExtra(Const.USER_PASSWORD, password);
                             intent.putExtra(Const.USER_NAME, name);
+                            intent.putExtra(Const.USER_EMAIL, email);
                             startActivity(intent);
                             break;
                         }
