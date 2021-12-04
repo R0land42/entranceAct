@@ -25,7 +25,7 @@
                 android:fontFamily="cursive"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:text="Zalupa Coding"
+                android:text="Авторизация"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="48sp"
@@ -53,7 +53,7 @@
                 android:backgroundTint="#515150"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Логин"
+                android:hint="@string/login"
                 android:inputType="textPersonName" />
 
         </TableRow>
@@ -77,7 +77,7 @@
                 android:backgroundTint="#515150"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Пароль"
+                android:hint="@string/password"
                 android:inputType="textPassword"/>
 
         </TableRow>
@@ -101,10 +101,10 @@
                 android:backgroundTint="#E1BE0C"
                 android:gravity="center"
                 android:onClick="onClickEnter"
-                android:text="Вход"
+                android:text="@string/signIn"
                 android:textAlignment="center"
                 android:textColor="#000000"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textStyle="bold"/>
 
         </TableRow>
@@ -129,10 +129,10 @@
                 android:backgroundTint="#E1BE0C"
                 android:gravity="center"
                 android:onClick="onClickSignUpFormOp"
-                android:text="Регистрация"
+                android:text="@string/signUp"
                 android:textAlignment="center"
                 android:textColor="#000000"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textStyle="bold"/>
 
         </TableRow>

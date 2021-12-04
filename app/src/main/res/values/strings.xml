@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">entranceAct</string>
+    <string name="password">Пароль</string>
+    <string name="login">Логин</string>
+    <string name="signIn">Вход</string>
+    <string name="signUp">Регистрация</string>
+    <string name="user_name">Имя</string>
+    <string name="user_email">Почта</string>
 </resources>
