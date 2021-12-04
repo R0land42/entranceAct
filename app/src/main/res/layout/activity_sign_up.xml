@@ -16,22 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingTop="70dp">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="cursive"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:text="Zalupa Coding"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="48sp"
-                android:textStyle="bold" />
-        </TableRow>
+            android:paddingTop="70dp"/>
 
         <TableRow
             android:layout_width="wrap_content"
@@ -46,9 +31,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:paddingBottom="5dp"
-                android:text="Регистрация"
+                android:text="@string/signUp"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="34sp"
                 android:textStyle="bold" />
         </TableRow>
@@ -67,11 +52,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="#515150"
-                android:backgroundTint="#515150"
+                android:background="@color/gray"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/yellow"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Логин"
+                android:hint="@string/login"
                 android:inputType="textPersonName"
                 android:paddingBottom="5dp" />
         </TableRow>
@@ -85,18 +71,17 @@
             android:paddingRight="40dp"
             android:paddingBottom="5dp">
 
-            >
-
             <EditText
                 android:id="@+id/edTextName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="#515150"
-                android:backgroundTint="#515150"
+                android:background="@color/gray"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/yellow"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Имя"
+                android:hint="@string/user_name"
                 android:inputType="textPersonName"
                 android:paddingBottom="5dp" />
         </TableRow>
@@ -108,17 +93,19 @@
             android:paddingLeft="40dp"
             android:paddingTop="5dp"
             android:paddingRight="40dp"
-            android:paddingBottom="5dp">>
+            android:paddingBottom="5dp">
 
             <EditText
                 android:id="@+id/edTextPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="#515150"
+                android:background="@color/gray"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/yellow"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Пароль"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:paddingBottom="5dp"
                 android:password="false" />
@@ -133,17 +120,17 @@
             android:paddingRight="40dp"
             android:paddingBottom="5dp">
 
-            >
-
             <EditText
                 android:id="@+id/edTextEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="#515150"
+                android:background="@color/gray"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/yellow"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Почта"
+                android:hint="@string/user_email"
                 android:inputType="textPersonName"
                 android:paddingBottom="5dp" />
         </TableRow>
@@ -161,12 +148,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="#E1BE0C"
+                android:backgroundTint="@color/yellow"
                 android:gravity="center"
                 android:onClick="onClickSignUp"
                 android:paddingBottom="5dp"
                 android:text="Зарегистрироваться"
-                android:textColor="#000000"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </TableRow>

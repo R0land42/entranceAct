@@ -1,14 +1,15 @@
 package com.example.entranceact;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,11 +17,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText editTextLogin, editTextPassword;
+    private EditText editTextLogin, editTextTextPassword;
     private DatabaseReference dbUsers;
+    private String usersRef = "Users";
     private TextView textView4;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,25 +33,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void Init(){
         editTextLogin = findViewById(R.id.editTextLogin);
-        editTextPassword = findViewById(R.id.editTextPassword);
-        dbUsers = FirebaseDatabase.getInstance().getReference(Const.DB_USERS_REF);
+        editTextTextPassword = findViewById(R.id.editTextPassword);
+        dbUsers = FirebaseDatabase.getInstance().getReference(usersRef);
         textView4 = findViewById(R.id.textView4);
     }
 
+
     public void onClickEnter(View view){
         String login = editTextLogin.getText().toString();
-        String password = editTextPassword.getText().toString();
-        textView4.setText("");
+        String password = Encrypting.sha256(editTextTextPassword.getText().toString());
         searchLoginAndPassword(login, password);
-
     }
 
     public void onClickSignUpFormOp(View view){
         Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
         startActivity(intent);
-
     }
-
 
     public void searchLoginAndPassword(String log, String passwr){
         ValueEventListener vList = new ValueEventListener() {
@@ -61,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     users users = ds.getValue(users.class);
                     String login = users.login;
                     String password = users.password;
+                    System.out.println(password);
                     String name = users.name;
                     String email = users.email;
                     if (login.equals(log)){
@@ -91,13 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         };
         dbUsers.addValueEventListener(vList);
     }
-
-
-
-
 }

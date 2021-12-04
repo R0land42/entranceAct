@@ -25,9 +25,9 @@
                 android:fontFamily="cursive"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:text="Zalupa Coding"
+                android:text="Авторизация"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="48sp"
                 android:textStyle="bold" />
 
@@ -49,11 +49,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:paddingBottom="5dp"
-                android:background="#515150"
-                android:backgroundTint="#515150"
+                android:background="@color/gray"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/yellow"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Логин"
+                android:hint="@string/login"
                 android:inputType="textPersonName" />
 
         </TableRow>
@@ -73,11 +74,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:paddingBottom="5dp"
-                android:background="#515150"
-                android:backgroundTint="#515150"
+                android:background="@color/gray"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/yellow"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Пароль"
+                android:hint="@string/password"
                 android:inputType="textPassword"/>
 
         </TableRow>
@@ -98,13 +100,13 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:backgroundTint="#E1BE0C"
+                android:backgroundTint="@color/yellow"
                 android:gravity="center"
                 android:onClick="onClickEnter"
-                android:text="Вход"
+                android:text="@string/signIn"
                 android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
                 android:textStyle="bold"/>
 
         </TableRow>
@@ -126,13 +128,13 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:backgroundTint="#E1BE0C"
+                android:backgroundTint="@color/yellow"
                 android:gravity="center"
                 android:onClick="onClickSignUpFormOp"
-                android:text="Регистрация"
+                android:text="@string/signUp"
                 android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
                 android:textStyle="bold"/>
 
         </TableRow>

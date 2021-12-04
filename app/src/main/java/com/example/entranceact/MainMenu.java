@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Random;
 
 public class MainMenu extends AppCompatActivity {
@@ -31,12 +32,12 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         getWindow().setStatusBarColor(Color.parseColor("#333333"));
-        init();
+        Init();
     }
 
-    public void init(){
+    public void Init(){
         textViewWelcome = findViewById(R.id.textViewWelcome);
         edTextProjectKey = findViewById(R.id.edTextProjectKey);
         edTextProjectKeyCheck = findViewById(R.id.edTextProjectKeyCheck);
@@ -49,6 +50,7 @@ public class MainMenu extends AppCompatActivity {
         textViewWelcome.setText("Добро пожаловать, " + userName);
         dbProjectUsersIn = FirebaseDatabase.getInstance().getReference(Const.DB_PROJECT_REF);
     }
+
 
     public void onClickStartNewProject(View view){
         projectName = edTextProjectName.getText().toString();
