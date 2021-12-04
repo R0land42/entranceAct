@@ -32,7 +32,7 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        Objects.requireNonNull(getSupportActionBar()).hide();
+        getSupportActionBar().hide();
         getWindow().setStatusBarColor(Color.parseColor("#333333"));
         Init();
     }
@@ -67,7 +67,8 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void onClickConnectToProject(View view){
-
+        Intent intent = new Intent(MainMenu.this, CheckAct.class);
+        startActivity(intent);
     }
 
     public String makeProjectKey(String projectName, String userName){

@@ -1,5 +1,7 @@
 package com.example.entranceact;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,13 +20,15 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText edTextlogin, edTextName, edTextPassword, edTextEmail;
     private DatabaseReference dbUsers;
     private TextView textView3;
+    public static Activity SignUpActivityContext;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        Objects.requireNonNull(getSupportActionBar()).hide();
+        getSupportActionBar().hide();
+        SignUpActivityContext = this;
         Init();
         getWindow().setStatusBarColor(Color.parseColor("#333333"));
     }

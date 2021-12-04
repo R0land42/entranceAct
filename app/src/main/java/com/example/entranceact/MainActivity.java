@@ -1,5 +1,6 @@
 package com.example.entranceact;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference dbUsers;
     private String usersRef = "Users";
     private TextView textView4;
+    public static Activity MainActivityContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
         getWindow().setStatusBarColor(Color.parseColor("#333333"));
+        MainActivityContext = this;
         Init();
     }
 
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public void searchLoginAndPassword(String log, String passwr){
         ValueEventListener vList = new ValueEventListener() {
             @Override
@@ -58,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                     users users = ds.getValue(users.class);
                     String login = users.login;
                     String password = users.password;
-                    System.out.println(password);
                     String name = users.name;
                     String email = users.email;
                     if (login.equals(log)){
@@ -91,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
-        dbUsers.addValueEventListener(vList);
+        dbUsers.addListenerForSingleValueEvent(vList);
     }
+
+
+
+
 }
