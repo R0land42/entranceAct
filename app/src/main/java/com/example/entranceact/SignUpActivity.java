@@ -23,29 +23,31 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sign_up);
+        Objects.requireNonNull(getSupportActionBar()).hide();
+        Init();
+        getWindow().setStatusBarColor(Color.parseColor("#333333"));
+    }
+
+    public void Init(){
         edTextlogin = findViewById(R.id.edTextlogin);
         edTextName = findViewById(R.id.edTextName);
         edTextPassword = findViewById(R.id.edTextPassword);
         edTextEmail = findViewById(R.id.edTextEmail);
         textView3 = findViewById(R.id.textView3);
         dbUsers = FirebaseDatabase.getInstance().getReference(Const.DB_USERS_REF);
-
-        setContentView(R.layout.activity_sign_up);
-        Objects.requireNonNull(getSupportActionBar()).hide();
-        getWindow().setStatusBarColor(Color.parseColor("#333333"));
     }
-
 
     public void onClickSignUp(View view){
         String login = edTextlogin.getText().toString();
         String name = edTextName.getText().toString();
-        String password = Encrypting.sha256(edTextPassword.getText().toString());;
+        String password = Encrypting.sha256(edTextPassword.getText().toString());
         String email = edTextEmail.getText().toString();
         users NewUsers = new users(login, name, password, email);
         if (!TextUtils.isEmpty(login) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(email)){
             dbUsers.child(login).setValue(NewUsers);
             textView3.setTextColor(Color.parseColor("#00FF00"));
-            textView3.setText("Регистрация прошла успешно!");;
+            textView3.setText("Регистрация прошла успешно!");
         }
         else{
             checkEmptyField(login,name,password,email);

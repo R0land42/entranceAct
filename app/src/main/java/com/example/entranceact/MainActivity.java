@@ -18,39 +18,39 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     private EditText editTextLogin, editTextTextPassword;
-    private DatabaseReference dUsers;
+    private DatabaseReference dbUsers;
     private String usersRef = "Users";
     private TextView textView4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        editTextLogin = findViewById(R.id.editTextLogin);
-        editTextTextPassword = findViewById(R.id.editTextPassword);
-        dUsers = FirebaseDatabase.getInstance().getReference(usersRef);
-        textView4 = findViewById(R.id.textView4);
-
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
         getWindow().setStatusBarColor(Color.parseColor("#333333"));
-
+        Init();
     }
+
+    public void Init(){
+        editTextLogin = findViewById(R.id.editTextLogin);
+        editTextTextPassword = findViewById(R.id.editTextPassword);
+        dbUsers = FirebaseDatabase.getInstance().getReference(usersRef);
+        textView4 = findViewById(R.id.textView4);
+    }
+
 
     public void onClickEnter(View view){
         String login = editTextLogin.getText().toString();
         String password = Encrypting.sha256(editTextTextPassword.getText().toString());
-        searchLogin(login, password);
-
+        searchLoginAndPassword(login, password);
     }
 
     public void onClickSignUpFormOp(View view){
         Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
         startActivity(intent);
-
     }
 
-    public void searchLogin(String log, String pass){
+    public void searchLoginAndPassword(String log, String passwr){
         ValueEventListener vList = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -58,30 +58,39 @@ public class MainActivity extends AppCompatActivity {
                     users users = ds.getValue(users.class);
                     String login = users.login;
                     String password = users.password;
+                    System.out.println(password);
+                    String name = users.name;
+                    String email = users.email;
                     if (login.equals(log)){
-                        if(password.equals(pass)){
-                            textView4.setText(new StringBuilder().append("Добро пожаловать, ").append(login).append(". Снова.").toString());
+                        if(password.equals(passwr)){
+                            Intent intent = new Intent(MainActivity.this, MainMenu.class);
+                            intent.putExtra(Const.USER_LOGIN, login);
+                            intent.putExtra(Const.USER_PASSWORD, password);
+                            intent.putExtra(Const.USER_NAME, name);
+                            intent.putExtra(Const.USER_EMAIL, email);
+                            startActivity(intent);
+                            break;
                         }
                         else{
-                            textView4.setText("Неправильный пароль!");
+                            textView4.setTextColor(Color.parseColor("#FF0000"));
+                            textView4.setText("Неверный логин или пароль!");
                         }
+
                     }
                     else{
-                        textView4.setText("Неправильный логин!");
+                        textView4.setTextColor(Color.parseColor("#FF0000"));
+                        textView4.setText("Неверный логин или пароль!");
                     }
-                    break;
+
+
                 }
 
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         };
-        dUsers.addValueEventListener(vList);
+        dbUsers.addValueEventListener(vList);
     }
-
-
-
-
 }

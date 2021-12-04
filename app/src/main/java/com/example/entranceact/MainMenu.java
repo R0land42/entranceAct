@@ -31,6 +31,13 @@ public class MainMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main_menu);
+        Objects.requireNonNull(getSupportActionBar()).hide();
+        getWindow().setStatusBarColor(Color.parseColor("#333333"));
+        Init();
+    }
+
+    public void Init(){
         textViewWelcome = findViewById(R.id.textViewWelcome);
         edTextProjectKey = findViewById(R.id.edTextProjectKey);
         edTextProjectKeyCheck = findViewById(R.id.edTextProjectKeyCheck);
@@ -42,10 +49,8 @@ public class MainMenu extends AppCompatActivity {
         userEmail = intent.getStringExtra(Const.USER_EMAIL);
         textViewWelcome.setText("Добро пожаловать, " + userName);
         dbProjectUsersIn = FirebaseDatabase.getInstance().getReference(Const.DB_PROJECT_REF);
-        setContentView(R.layout.activity_main_menu);
-        Objects.requireNonNull(getSupportActionBar()).hide();
-        getWindow().setStatusBarColor(Color.parseColor("#333333"));
     }
+
 
     public void onClickStartNewProject(View view){
         projectName = edTextProjectName.getText().toString();
