@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,10 +23,10 @@ import java.util.Objects;
 import java.util.Random;
 
 public class MainMenu extends AppCompatActivity {
-    private TextView textViewWelcome;
+    private TextView textViewWelcome, textViewEmptyProjectName;
     private EditText edTextProjectKeyCheck, edTextProjectName, edTextProjectKey;
     private String userName, userLogin, userPassword, userEmail, projectKey, projectName, userColor;
-    private DatabaseReference dbProjectUsersIn;
+    private DatabaseReference dbProject;
 
 
     @Override
@@ -39,6 +40,7 @@ public class MainMenu extends AppCompatActivity {
 
     public void Init(){
         textViewWelcome = findViewById(R.id.textViewWelcome);
+        textViewEmptyProjectName = findViewById(R.id.textViewEmptyProjectName);
         edTextProjectKey = findViewById(R.id.edTextProjectKey);
         edTextProjectKeyCheck = findViewById(R.id.edTextProjectKeyCheck);
         edTextProjectName = findViewById(R.id.edTextProjectName);
@@ -48,21 +50,25 @@ public class MainMenu extends AppCompatActivity {
         userPassword = intent.getStringExtra(Const.USER_PASSWORD);
         userEmail = intent.getStringExtra(Const.USER_EMAIL);
         textViewWelcome.setText("Добро пожаловать, " + userName);
-        dbProjectUsersIn = FirebaseDatabase.getInstance().getReference(Const.DB_PROJECT_REF);
+        dbProject = FirebaseDatabase.getInstance().getReference(Const.DB_PROJECT_REF);
     }
 
 
     public void onClickStartNewProject(View view){
         projectName = edTextProjectName.getText().toString();
-        userColor = genColor();
-        projectKey = makeProjectKey(projectName,userName);
-        ProjectUsers NewProjectUser = new ProjectUsers(userLogin, userName, userPassword,
-                userEmail, projectKey, userColor);
-        dbProjectUsersIn.child(projectKey).child("UserInDesk").child(userLogin).setValue(NewProjectUser);
-
-        edTextProjectKeyCheck.setText(projectKey);
-        int color= Integer.parseInt(userColor);
-        textViewWelcome.setTextColor(color);
+        if (!TextUtils.isEmpty(projectName)){
+            userColor = genColor();
+            projectKey = makeProjectKey(projectName,userName);
+            ProjectUsers NewProjectUser = new ProjectUsers(userLogin, userName, userPassword,
+                    userEmail, userColor);
+            dbProject.child(projectKey).child("UserInDesk").child(userLogin).setValue(NewProjectUser);
+            ProjectInfo NewProjectInfo = new ProjectInfo(projectName, projectKey);
+            dbProject.child(projectKey).child("ProjectInfo").setValue(NewProjectInfo);
+        }
+        else{
+            textViewEmptyProjectName.setTextColor(Color.parseColor("#FF0000"));
+            textViewEmptyProjectName.setText("Введите название проекта!");
+        }
 
     }
 
@@ -101,6 +107,7 @@ public class MainMenu extends AppCompatActivity {
 
             }
         };
+        dbProject.addListenerForSingleValueEvent(vlList);
     }
 
 

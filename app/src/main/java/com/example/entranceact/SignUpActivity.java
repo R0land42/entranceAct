@@ -8,11 +8,16 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
@@ -21,6 +26,8 @@ public class SignUpActivity extends AppCompatActivity {
     private DatabaseReference dbUsers;
     private TextView textView3;
     public static Activity SignUpActivityContext;
+
+
 
 
     @Override
@@ -42,21 +49,49 @@ public class SignUpActivity extends AppCompatActivity {
         dbUsers = FirebaseDatabase.getInstance().getReference(Const.DB_USERS_REF);
     }
 
-    public void onClickSignUp(View view){
+    public void onClickSignUp(View view) {
         String login = edTextlogin.getText().toString();
         String name = edTextName.getText().toString();
         String password = Encrypting.sha256(edTextPassword.getText().toString());
         String email = edTextEmail.getText().toString();
-        users NewUsers = new users(login, name, password, email);
-        if (!TextUtils.isEmpty(login) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(email)){
-            dbUsers.child(login).setValue(NewUsers);
-            textView3.setTextColor(Color.parseColor("#00FF00"));
-            textView3.setText("Регистрация прошла успешно!");
+        if (!TextUtils.isEmpty(login) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(email)) {
+            ValueEventListener vList = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Boolean chk = true;
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        users users = ds.getValue(users.class);
+                        String loginChk = users.login;
+                        if (loginChk.equals(login)) {
+                            chk = false;
+                            break;
+                        } else {
+                            chk = true;
+                        }
+                    }
+                    users NewUsers = new users(login, name, password, email);
+                    if (chk == true) {
+                        dbUsers.child(login).setValue(NewUsers);
+                        textView3.setTextColor(Color.parseColor("#00FF00"));
+                        textView3.setText("Регистрация прошла успешно!");
+                    } else {
+                        textView3.setTextColor(Color.parseColor("#FF0000"));
+                        textView3.setText("Пользователь с таким логином уже зарегестирован");
+                    }
+
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            };
+            dbUsers.addListenerForSingleValueEvent(vList);
+
         }
-        else{
-            checkEmptyField(login,name,password,email);
+        else {
+            checkEmptyField(login, name, password, email);
         }
     }
+
 
     public void checkEmptyField(String login, String name, String password, String email){
         String message = "Ошибка регистрации! Заполните поле: ";
@@ -75,6 +110,10 @@ public class SignUpActivity extends AppCompatActivity {
         textView3.setTextColor(Color.parseColor("#FF0000"));
         textView3.setText(message);;
     }
+
+
+
+
 
 
 }

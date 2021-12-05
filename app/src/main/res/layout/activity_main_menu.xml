@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingTop="70dp">
+            android:paddingTop="50dp">
 
             <TextView
                 android:id="@+id/textViewLogo"
@@ -54,6 +54,8 @@
 
         </TableRow>
 
+
+
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,6 +64,8 @@
             android:paddingTop="5dp"
             android:paddingRight="40dp"
             android:paddingBottom="5dp">
+
+
 
             <EditText
                 android:id="@+id/edTextProjectName"
@@ -77,6 +81,23 @@
                 android:paddingBottom="5dp" />
         </TableRow>
 
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textViewEmptyProjectName"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:paddingBottom="5dp"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+        </TableRow>
+
 
         <TableRow
             android:layout_width="wrap_content"
@@ -84,14 +105,12 @@
             android:gravity="center"
             android:paddingLeft="40dp"
             android:paddingTop="10dp"
-            android:paddingRight="40dp"
-            android:paddingBottom="5dp">
+            android:paddingRight="40dp">
 
             <Button
                 android:id="@+id/btnNewProject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:backgroundTint="#E1BE0C"
                 android:gravity="center"
                 android:onClick="onClickStartNewProject"
