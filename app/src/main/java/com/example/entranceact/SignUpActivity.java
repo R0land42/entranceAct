@@ -58,34 +58,47 @@ public class SignUpActivity extends AppCompatActivity {
             ValueEventListener vList = new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Boolean chk = true;
+                    Boolean chkLog = true;
+                    Boolean chkEmail = true;
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         users users = ds.getValue(users.class);
                         String loginChk = users.login;
-                        if (loginChk.equals(login)) {
-                            chk = false;
+                        String emailChk = users.email;
+                        if (loginChk.equals(login) || emailChk.equals(email)) {
+                            if (emailChk.equals(email)){
+                                chkEmail = false;
+                            }
+                            if (loginChk.equals(login)){
+                                chkLog = false;
+                            }
                             break;
                         } else {
-                            chk = true;
+                            chkEmail = true;
+                            chkLog = true;
                         }
                     }
                     users NewUsers = new users(login, name, password, email);
-                    if (chk == true) {
+                    if (chkLog == true && chkEmail == true) {
                         dbUsers.child(login).setValue(NewUsers);
                         textView3.setTextColor(Color.parseColor("#00FF00"));
                         textView3.setText("Регистрация прошла успешно!");
                     } else {
-                        textView3.setTextColor(Color.parseColor("#FF0000"));
-                        textView3.setText("Пользователь с таким логином уже зарегестирован");
+                        if (chkLog == false){
+                            textView3.setTextColor(Color.parseColor("#FF0000"));
+                            textView3.setText("Пользователь с таким логином уже зарегестирован");
+                        }
+                        if (chkEmail == false){
+                            textView3.setTextColor(Color.parseColor("#FF0000"));
+                            textView3.setText("Пользователь с такой почтой уже зарегестирован");
+                        }
                     }
-
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
             };
             dbUsers.addListenerForSingleValueEvent(vList);
-
         }
         else {
             checkEmptyField(login, name, password, email);
