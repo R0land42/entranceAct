@@ -43,6 +43,7 @@ public class MainMenu extends AppCompatActivity {
         textViewEmptyProjectName = findViewById(R.id.textViewEmptyProjectName);
         edTextProjectKey = findViewById(R.id.edTextProjectKey);
         edTextProjectKeyCheck = findViewById(R.id.edTextProjectKeyCheck);
+        //edTextProjectKeyCheck.setRawInputType(0x00000000);
         edTextProjectName = findViewById(R.id.edTextProjectName);
         Intent intent = getIntent();
         userName = intent.getStringExtra(Const.USER_NAME);
@@ -57,14 +58,50 @@ public class MainMenu extends AppCompatActivity {
     public void onClickStartNewProject(View view){
         projectName = edTextProjectName.getText().toString();
         if (!TextUtils.isEmpty(projectName)){
-            userColor = genColor();
-            projectKey = makeProjectKey(projectName,userName);
-            ProjectUsers NewProjectUser = new ProjectUsers(userLogin, userName, userPassword,
-                    userEmail, userColor);
-            dbProject.child(projectKey).child("UserInDesk").child(userLogin).setValue(NewProjectUser);
-            ProjectInfo NewProjectInfo = new ProjectInfo(projectName, projectKey);
-            dbProject.child(projectKey).child("ProjectInfo").setValue(NewProjectInfo);
+            ValueEventListener vList = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Boolean chkProjectName = false;
+                    for(DataSnapshot ds : snapshot.getChildren()){
+                        ProjectInfo chekLogAndProjName = ds.getValue(ProjectInfo.class);
+                       // String logChk = chekLogAndProjName.projectCreator;
+                        String projNameChk = chekLogAndProjName.projectName;
+                        if (projectName.equals(projNameChk)){
+                            chkProjectName = true;
+                            break;
+                        }
+                        else{
+                            chkProjectName = false;
+                        }
+
+                    }
+
+                    if(chkProjectName == false){
+                        userColor = genColor();
+                        projectKey = makeProjectKey(projectName,userLogin);
+                        ProjectUsers NewProjectUser = new ProjectUsers(userLogin, userName, userPassword,
+                                userEmail, userColor);
+                        dbProject.child(projectKey).child("UserInDesk").child(userLogin).setValue(NewProjectUser);
+                        ProjectInfo NewProjectInfo = new ProjectInfo(projectName, projectKey, userLogin);
+                        dbProject.child(projectKey).child("ProjectInfo").setValue(NewProjectInfo);
+                        edTextProjectKeyCheck.setText(projectKey);
+                        textViewEmptyProjectName.setText("");
+                    }
+                    else{
+                        textViewEmptyProjectName.setTextColor(Color.parseColor("#FF0000"));
+                        textViewEmptyProjectName.setText("У Вас уже имеется такой проект!");
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            };
+            dbProject.child(makeProjectKey(projectName,userLogin)).addListenerForSingleValueEvent(vList);
         }
+
         else{
             textViewEmptyProjectName.setTextColor(Color.parseColor("#FF0000"));
             textViewEmptyProjectName.setText("Введите название проекта!");
@@ -77,8 +114,8 @@ public class MainMenu extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public String makeProjectKey(String projectName, String userName){
-    String key = projectName+userName;
+    public String makeProjectKey(String projectName, String urLogin){
+    String key = Encrypting.sha256(projectName+urLogin);
         return key;
     }
 
