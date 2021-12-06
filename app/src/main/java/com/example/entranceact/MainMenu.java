@@ -23,7 +23,7 @@ import java.util.Objects;
 import java.util.Random;
 
 public class MainMenu extends AppCompatActivity {
-    private TextView textViewWelcome, textViewEmptyProjectName;
+    private TextView textViewWelcome, textViewEmptyProjectName, textViewProjectKeyError;
     private EditText edTextProjectKeyCheck, edTextProjectName, edTextProjectKey;
     private String userName, userLogin, userPassword, userEmail, projectKey, projectName, userColor;
     private DatabaseReference dbProject;
@@ -41,16 +41,16 @@ public class MainMenu extends AppCompatActivity {
     public void Init(){
         textViewWelcome = findViewById(R.id.textViewWelcome);
         textViewEmptyProjectName = findViewById(R.id.textViewEmptyProjectName);
+        textViewProjectKeyError = findViewById(R.id.textViewProjectKeyError);
         edTextProjectKey = findViewById(R.id.edTextProjectKey);
         edTextProjectKeyCheck = findViewById(R.id.edTextProjectKeyCheck);
-        //edTextProjectKeyCheck.setRawInputType(0x00000000);
         edTextProjectName = findViewById(R.id.edTextProjectName);
         Intent intent = getIntent();
         userName = intent.getStringExtra(Const.USER_NAME);
         userLogin = intent.getStringExtra(Const.USER_LOGIN);
         userPassword = intent.getStringExtra(Const.USER_PASSWORD);
         userEmail = intent.getStringExtra(Const.USER_EMAIL);
-        textViewWelcome.setText("Добро пожаловать, " + userName);
+        textViewWelcome.setText("Добро пожаловать, " + userName + ", снова");
         dbProject = FirebaseDatabase.getInstance().getReference(Const.DB_PROJECT_REF);
     }
 
@@ -106,16 +106,76 @@ public class MainMenu extends AppCompatActivity {
             textViewEmptyProjectName.setTextColor(Color.parseColor("#FF0000"));
             textViewEmptyProjectName.setText("Введите название проекта!");
         }
-
     }
 
     public void onClickConnectToProject(View view){
-        Intent intent = new Intent(MainMenu.this, CheckAct.class);
-        startActivity(intent);
+        userColor = genColor();
+        String projectKeyToConnect = edTextProjectKey.getText().toString();
+        if (!TextUtils.isEmpty(projectKeyToConnect)){
+            ValueEventListener vList = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    boolean chkKey = false;
+                   // boolean chkLog = false;
+                    for (DataSnapshot ds : snapshot.getChildren()){
+                        ProjectInfo chekProjectKey = ds.getValue(ProjectInfo.class);
+                        String projKey = chekProjectKey.projectKey;
+                        if (projKey.equals(projectKeyToConnect)){
+                            chkKey = true;
+                            //for(DataSnapshot dss : snapshot.getChildren()){
+                                //ProjectUsers chkUserInProject = dss.getValue(ProjectUsers.class);
+                               // String userLoginInProject = chkUserInProject.login;
+                                //if (userLoginInProject.equals(userLogin)){
+                                   // chkLog = true;
+                                   // break;
+                               // }
+                               // else{
+                                   // chkLog = false;
+                               // }
+                           // }
+                            break;
+                        }
+                        else{
+                            chkKey = false;
+                        }
+                    }
+                    if(chkKey == true){
+                        //if (chkLog == true){
+                           // Intent intent = new Intent(MainMenu.this, CheckAct.class);
+                           // startActivity(intent);
+                       // }
+                        //else{
+                            ProjectUsers NewProjectUser = new ProjectUsers(userLogin, userName, userPassword,
+                                    userEmail, userColor);
+                            dbProject.child(projectKeyToConnect).child("UserInDesk").child(userLogin).setValue(NewProjectUser);
+                            Intent intent = new Intent(MainMenu.this, CheckAct.class);
+                            startActivity(intent);
+                    }
+                    //}
+                    else{
+                        textViewProjectKeyError.setTextColor(Color.parseColor("#FF0000"));
+                        textViewProjectKeyError.setText("Проект не найден!");
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            };
+            dbProject.child(projectKeyToConnect).addListenerForSingleValueEvent(vList);
+        }
+
+        else{
+            textViewProjectKeyError.setTextColor(Color.parseColor("#FF0000"));
+            textViewProjectKeyError.setText("Введите ключ проекта!");
+        }
     }
 
-    public String makeProjectKey(String projectName, String urLogin){
-    String key = Encrypting.sha256(projectName+urLogin);
+    public String makeProjectKey(String projName, String urLogin){
+    String key = Encrypting.sha256(projName+urLogin);
         return key;
     }
 
@@ -123,8 +183,8 @@ public class MainMenu extends AppCompatActivity {
     public String genColor(){
         Random random = new Random();
         int color = Color.argb(255, random.nextInt(256),random.nextInt(256),random.nextInt(256));
-        String ress;
-        return ress = String.valueOf(color);
+        String ress = String.valueOf(color);
+        return ress;
 
 
     }

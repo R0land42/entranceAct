@@ -28,8 +28,6 @@ public class SignUpActivity extends AppCompatActivity {
     public static Activity SignUpActivityContext;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,18 +76,18 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     }
                     users NewUsers = new users(login, name, password, email);
-                    if (chkLog == true && chkEmail == true) {
+                    if (chkLog && chkEmail) {
                         dbUsers.child(login).setValue(NewUsers);
                         textView3.setTextColor(Color.parseColor("#00FF00"));
                         textView3.setText("Регистрация прошла успешно!");
                     } else {
-                        if (chkLog == false){
+                        if (!chkLog){
                             textView3.setTextColor(Color.parseColor("#FF0000"));
-                            textView3.setText("Пользователь с таким логином уже зарегестирован");
+                            textView3.setText("Пользователь с таким логином уже зарегистирован");
                         }
-                        if (chkEmail == false){
+                        if (!chkEmail){
                             textView3.setTextColor(Color.parseColor("#FF0000"));
-                            textView3.setText("Пользователь с такой почтой уже зарегестирован");
+                            textView3.setText("Пользователь с такой почтой уже зарегистирован");
                         }
                     }
                 }
