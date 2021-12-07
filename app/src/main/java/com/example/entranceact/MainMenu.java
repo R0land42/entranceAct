@@ -17,9 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.sql.Time;
-import java.util.Date;
-import java.util.Objects;
 import java.util.Random;
 
 public class MainMenu extends AppCompatActivity {
@@ -84,6 +81,7 @@ public class MainMenu extends AppCompatActivity {
                         dbProject.child(projectKey).child("UserInDesk").child(userLogin).setValue(NewProjectUser);
                         ProjectInfo NewProjectInfo = new ProjectInfo(projectName, projectKey, userLogin);
                         dbProject.child(projectKey).child("ProjectInfo").setValue(NewProjectInfo);
+                        //dbProject.child(projectKey).child("ProjectZChat").push().setValue("Добро пожаловать в чат!");
                         edTextProjectKeyCheck.setText(projectKey);
                         textViewEmptyProjectName.setText("");
                     }
@@ -116,23 +114,11 @@ public class MainMenu extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     boolean chkKey = false;
-                   // boolean chkLog = false;
                     for (DataSnapshot ds : snapshot.getChildren()){
                         ProjectInfo chekProjectKey = ds.getValue(ProjectInfo.class);
                         String projKey = chekProjectKey.projectKey;
                         if (projKey.equals(projectKeyToConnect)){
                             chkKey = true;
-                            //for(DataSnapshot dss : snapshot.getChildren()){
-                                //ProjectUsers chkUserInProject = dss.getValue(ProjectUsers.class);
-                               // String userLoginInProject = chkUserInProject.login;
-                                //if (userLoginInProject.equals(userLogin)){
-                                   // chkLog = true;
-                                   // break;
-                               // }
-                               // else{
-                                   // chkLog = false;
-                               // }
-                           // }
                             break;
                         }
                         else{
@@ -140,18 +126,17 @@ public class MainMenu extends AppCompatActivity {
                         }
                     }
                     if(chkKey == true){
-                        //if (chkLog == true){
-                           // Intent intent = new Intent(MainMenu.this, CheckAct.class);
-                           // startActivity(intent);
-                       // }
-                        //else{
                             ProjectUsers NewProjectUser = new ProjectUsers(userLogin, userName, userPassword,
                                     userEmail, userColor);
                             dbProject.child(projectKeyToConnect).child("UserInDesk").child(userLogin).setValue(NewProjectUser);
-                            Intent intent = new Intent(MainMenu.this, CheckAct.class);
+                            Intent intent = new Intent(MainMenu.this, ChatAct.class);
+                            intent.putExtra(Const.USER_LOGIN, userLogin);
+                            intent.putExtra(Const.USER_PASSWORD, userPassword);
+                            intent.putExtra(Const.USER_NAME, userName);
+                            intent.putExtra(Const.USER_EMAIL, userEmail);
+                            intent.putExtra(Const.CURENT_PROJECT_KEY, projectKeyToConnect);
                             startActivity(intent);
                     }
-                    //}
                     else{
                         textViewProjectKeyError.setTextColor(Color.parseColor("#FF0000"));
                         textViewProjectKeyError.setText("Проект не найден!");

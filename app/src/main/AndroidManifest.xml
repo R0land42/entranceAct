@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EntranceAct">
         <activity
-            android:name=".CheckAct"
+            android:name=".ChatAct"
             android:exported="false" />
         <activity
             android:name=".MainMenu"
