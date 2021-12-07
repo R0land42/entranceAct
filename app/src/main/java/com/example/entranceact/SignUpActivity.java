@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -26,7 +27,6 @@ public class SignUpActivity extends AppCompatActivity {
     private DatabaseReference dbUsers;
     private TextView textView3;
     public static Activity SignUpActivityContext;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
