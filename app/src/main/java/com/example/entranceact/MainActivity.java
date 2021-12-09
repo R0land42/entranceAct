@@ -20,9 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
     private EditText editTextLogin, editTextTextPassword;
     private DatabaseReference dbUsers;
-    private String usersRef = "Users";
     private TextView textView4;
     public static Activity MainActivityContext;
+    public static CurentUser curentUser = new CurentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     public void Init(){
         editTextLogin = findViewById(R.id.editTextLogin);
         editTextTextPassword = findViewById(R.id.editTextPassword);
-        dbUsers = FirebaseDatabase.getInstance().getReference(usersRef);
+        dbUsers = FirebaseDatabase.getInstance().getReference(Const.DB_USERS_REF);
         textView4 = findViewById(R.id.textView4);
     }
 
@@ -67,10 +67,8 @@ public class MainActivity extends AppCompatActivity {
                     if (login.equals(log)){
                         if(password.equals(passwr)){
                             Intent intent = new Intent(MainActivity.this, MainMenu.class);
-                            intent.putExtra(Const.USER_LOGIN, login);
-                            intent.putExtra(Const.USER_PASSWORD, password);
-                            intent.putExtra(Const.USER_NAME, name);
-                            intent.putExtra(Const.USER_EMAIL, email);
+                            curentUser = new CurentUser(login, name);
+                            textView4.setText("");
                             startActivity(intent);
                             break;
                         }

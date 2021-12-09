@@ -1,5 +1,7 @@
 package com.example.entranceact;
 
+import static com.example.entranceact.MainActivity.curentUser;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,7 +25,7 @@ public class MainMenu extends AppCompatActivity {
     private TextView textViewWelcome, textViewEmptyProjectName, textViewProjectKeyError;
     private EditText edTextProjectKeyCheck, edTextProjectName, edTextProjectKey;
     private String userName, userLogin, userPassword, userEmail, projectKey, projectName, userColor;
-    private DatabaseReference dbProject;
+    private DatabaseReference dbProject, dbUsers;
 
 
     @Override
@@ -43,12 +45,13 @@ public class MainMenu extends AppCompatActivity {
         edTextProjectKeyCheck = findViewById(R.id.edTextProjectKeyCheck);
         edTextProjectName = findViewById(R.id.edTextProjectName);
         Intent intent = getIntent();
-        userName = intent.getStringExtra(Const.USER_NAME);
-        userLogin = intent.getStringExtra(Const.USER_LOGIN);
-        userPassword = intent.getStringExtra(Const.USER_PASSWORD);
-        userEmail = intent.getStringExtra(Const.USER_EMAIL);
-        textViewWelcome.setText("Добро пожаловать, " + userName + ", снова");
+        //userName = intent.getStringExtra(Const.USER_NAME);
+        //userLogin = intent.getStringExtra(Const.USER_LOGIN);
+        //userPassword = intent.getStringExtra(Const.USER_PASSWORD);
+        //userEmail = intent.getStringExtra(Const.USER_EMAIL);
+        textViewWelcome.setText("Добро пожаловать, " + curentUser.curentName + ", снова");
         dbProject = FirebaseDatabase.getInstance().getReference(Const.DB_PROJECT_REF);
+        dbUsers = FirebaseDatabase.getInstance().getReference(Const.DB_USERS_REF);
     }
 
 
@@ -76,12 +79,12 @@ public class MainMenu extends AppCompatActivity {
                     if(chkProjectName == false){
                         userColor = genColor();
                         projectKey = makeProjectKey(projectName,userLogin);
-                        ProjectUsers NewProjectUser = new ProjectUsers(userLogin, userName, userPassword,
-                                userEmail, userColor);
-                        dbProject.child(projectKey).child("UserInDesk").child(userLogin).setValue(NewProjectUser);
-                        ProjectInfo NewProjectInfo = new ProjectInfo(projectName, projectKey, userLogin);
+                        ProjectUsers NewProjectUser = new ProjectUsers(curentUser.curentLog, curentUser.curentName, userColor);
+                        ProjectInfo NewProjectInfo = new ProjectInfo(projectName, projectKey, curentUser.curentLog);
+                        UserProject NewUserProject = new UserProject(projectKey, projectName);
+                        dbProject.child(projectKey).child("UserInDesk").child(curentUser.curentLog).setValue(NewProjectUser);
                         dbProject.child(projectKey).child("ProjectInfo").setValue(NewProjectInfo);
-                        //dbProject.child(projectKey).child("ProjectZChat").push().setValue("Добро пожаловать в чат!");
+                        dbUsers.child(curentUser.curentLog).child("userProjects").child(projectKey).setValue(NewUserProject);
                         edTextProjectKeyCheck.setText(projectKey);
                         textViewEmptyProjectName.setText("");
                     }
@@ -114,10 +117,12 @@ public class MainMenu extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     boolean chkKey = false;
+                    String projName = "";
                     for (DataSnapshot ds : snapshot.getChildren()){
                         ProjectInfo chekProjectKey = ds.getValue(ProjectInfo.class);
                         String projKey = chekProjectKey.projectKey;
                         if (projKey.equals(projectKeyToConnect)){
+                            projName = chekProjectKey.projectName;
                             chkKey = true;
                             break;
                         }
@@ -126,14 +131,17 @@ public class MainMenu extends AppCompatActivity {
                         }
                     }
                     if(chkKey == true){
-                            ProjectUsers NewProjectUser = new ProjectUsers(userLogin, userName, userPassword,
-                                    userEmail, userColor);
-                            dbProject.child(projectKeyToConnect).child("UserInDesk").child(userLogin).setValue(NewProjectUser);
+                            UserProject NewUserProject = new UserProject(projectKeyToConnect, projName);
+                            ProjectUsers NewProjectUser = new ProjectUsers(curentUser.curentLog, curentUser.curentName, userColor);
+                                    //, userPassword,
+                                    //userEmail,
+                            dbProject.child(projectKeyToConnect).child("UserInDesk").child(curentUser.curentLog).setValue(NewProjectUser);
+                            dbUsers.child(curentUser.curentLog).child("userProjects").child(projectKeyToConnect).setValue(NewUserProject);
                             Intent intent = new Intent(MainMenu.this, ChatAct.class);
-                            intent.putExtra(Const.USER_LOGIN, userLogin);
-                            intent.putExtra(Const.USER_PASSWORD, userPassword);
-                            intent.putExtra(Const.USER_NAME, userName);
-                            intent.putExtra(Const.USER_EMAIL, userEmail);
+                            //intent.putExtra(Const.USER_LOGIN, userLogin);
+                            //intent.putExtra(Const.USER_PASSWORD, userPassword);
+                            //intent.putExtra(Const.USER_NAME, userName);
+                            //intent.putExtra(Const.USER_EMAIL, userEmail);
                             intent.putExtra(Const.CURENT_PROJECT_KEY, projectKeyToConnect);
                             startActivity(intent);
                     }
@@ -174,22 +182,10 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
-    public void checkColor(String userColor){
-        ValueEventListener vlList = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()){
+    public void onClickOpenChk (View view){
+        Intent intent = new Intent(MainMenu.this, RecentProjects.class);
+        startActivity(intent);
 
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-        dbProject.addListenerForSingleValueEvent(vlList);
     }
 
 

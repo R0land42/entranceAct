@@ -1,5 +1,7 @@
 package com.example.entranceact;
 
+import static com.example.entranceact.MainActivity.curentUser;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,10 +43,10 @@ public class ChatAct extends AppCompatActivity {
 
     public void Init(){
         Intent intent = getIntent();
-        userName = intent.getStringExtra(Const.USER_NAME);
-        userLogin = intent.getStringExtra(Const.USER_LOGIN);
-        userPassword = intent.getStringExtra(Const.USER_PASSWORD);
-        userEmail = intent.getStringExtra(Const.USER_EMAIL);
+        //userName = intent.getStringExtra(Const.USER_NAME);
+        //userLogin = intent.getStringExtra(Const.USER_LOGIN);
+        //userPassword = intent.getStringExtra(Const.USER_PASSWORD);
+        //userEmail = intent.getStringExtra(Const.USER_EMAIL);
         curentProjetKey = intent.getStringExtra(Const.CURENT_PROJECT_KEY);
 
         edTextMessage = findViewById(R.id.edTextMessage);
@@ -109,7 +111,8 @@ public class ChatAct extends AppCompatActivity {
     }
 
     public void onClickSendMessage(View view){
-        String msg = userName + "(" + userLogin + ")" + System.getProperty ("line.separator") + edTextMessage.getText().toString();
+        String msg = edTextMessage.getText().toString();
+        String msgTosend = curentUser.curentName + "(" + curentUser.curentLog + ")" + System.getProperty ("line.separator") + msg;
         if (TextUtils.isEmpty(msg)){
             Toast.makeText(this, "Введите сообщение", Toast.LENGTH_SHORT).show();
             return;
@@ -118,7 +121,7 @@ public class ChatAct extends AppCompatActivity {
             Toast.makeText(this, "Слишком больше сообщение", Toast.LENGTH_SHORT).show();
             return;
         }
-        dbChat.child(curentProjetKey).child("ProjectZChat").push().setValue(msg);
+        dbChat.child(curentProjetKey).child("ProjectZChat").push().setValue(msgTosend);
         edTextMessage.setText("");
     }
 

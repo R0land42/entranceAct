@@ -1,16 +1,22 @@
 package com.example.entranceact;
 
 public class ProjectUsers {
-    public String login, name, password, email, userColor;
+    public String login, name, userColor;
+            //password, email, userColor;
 
     public ProjectUsers() {
     }
 
-    public ProjectUsers(String login, String name, String password, String email, String userColor) {
+    public ProjectUsers(String login, String name, String userColor
+                        //String password,
+                        // String email,
+
+    )
+                        {
         this.login = login;
         this.name = name;
-        this.password = password;
-        this.email = email;
+        //this.password = password;
+        //this.email = email;
         this.userColor = userColor;
     }
 
@@ -28,7 +34,7 @@ public class ProjectUsers {
         this.name = name;
     }
 
-    public String getPassword() {
+   /* public String getPassword() {
         return password;
     }
     public void setPassword(String password) {
@@ -41,7 +47,7 @@ public class ProjectUsers {
     public void setEmail(String email) {
         this.email = email;
     }
-
+*/
     public String getUserColor() {
         return userColor;
     }

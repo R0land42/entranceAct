@@ -89,13 +89,13 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/gray"
                 android:backgroundTint="@color/gray"
-                android:textColor="@color/yellow"
-                android:textColorHighlight="#FFFFFF"
                 android:ems="10"
                 android:gravity="center"
                 android:hint="Введите название проекта"
                 android:inputType="textPersonName"
-                android:paddingBottom="5dp" />
+                android:paddingBottom="5dp"
+                android:textColor="@color/yellow"
+                android:textColorHighlight="#FFFFFF" />
         </TableRow>
 
         <TableRow
@@ -112,12 +112,12 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/gray"
                 android:backgroundTint="@color/gray"
-                android:textColor="@color/yellow"
                 android:ems="10"
-                android:textColorHighlight="#FFFFFF"
                 android:gravity="center"
                 android:hint="Генерация ключа проекта"
-                android:paddingBottom="5dp" />
+                android:paddingBottom="5dp"
+                android:textColor="@color/yellow"
+                android:textColorHighlight="#FFFFFF" />
         </TableRow>
 
         <TableRow
@@ -146,8 +146,8 @@
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/textViewProjectKeyError"
@@ -174,13 +174,13 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/gray"
                 android:backgroundTint="@color/gray"
-                android:textColor="@color/yellow"
-                android:textColorHighlight="#FFFFFF"
                 android:ems="10"
                 android:gravity="center"
                 android:hint="Введите уникальный ключ "
                 android:inputType="textPersonName"
-                android:paddingBottom="5dp" />
+                android:paddingBottom="5dp"
+                android:textColor="@color/yellow"
+                android:textColorHighlight="#FFFFFF" />
         </TableRow>
 
 
@@ -203,6 +203,31 @@
                 android:onClick="onClickConnectToProject"
                 android:paddingBottom="5dp"
                 android:text="Присоединиться к проекту"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="40dp"
+            android:paddingTop="5dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="5dp">
+
+            <Button
+                android:id="@+id/btnChkProjects"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="#E1BE0C"
+                android:gravity="center"
+                android:onClick="onClickOpenChk"
+                android:paddingBottom="5dp"
+                android:text="Проверка"
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:textStyle="bold" />
