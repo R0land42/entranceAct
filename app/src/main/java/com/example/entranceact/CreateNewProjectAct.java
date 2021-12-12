@@ -1,6 +1,6 @@
 package com.example.entranceact;
 
-import static com.example.entranceact.MainActivity.curentUser;
+import static com.example.entranceact.SignInAct.curentUser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,17 +21,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 
-public class MainMenu extends AppCompatActivity {
+public class CreateNewProjectAct extends AppCompatActivity {
     private TextView textViewWelcome, textViewEmptyProjectName, textViewProjectKeyError;
     private EditText edTextProjectKeyCheck, edTextProjectName, edTextProjectKey;
     private String userName, userLogin, userPassword, userEmail, projectKey, projectName, userColor;
     private DatabaseReference dbProject, dbUsers;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
+        setContentView(R.layout.activity_create_new_project);
         getSupportActionBar().hide();
         getWindow().setStatusBarColor(Color.parseColor("#333333"));
         Init();
@@ -137,7 +136,7 @@ public class MainMenu extends AppCompatActivity {
                                     //userEmail,
                             dbProject.child(projectKeyToConnect).child("UserInDesk").child(curentUser.curentLog).setValue(NewProjectUser);
                             dbUsers.child(curentUser.curentLog).child("userProjects").child(projectKeyToConnect).setValue(NewUserProject);
-                            Intent intent = new Intent(MainMenu.this, ChatAct.class);
+                            Intent intent = new Intent(CreateNewProjectAct.this, ChatAct.class);
                             //intent.putExtra(Const.USER_LOGIN, userLogin);
                             //intent.putExtra(Const.USER_PASSWORD, userPassword);
                             //intent.putExtra(Const.USER_NAME, userName);
@@ -172,7 +171,6 @@ public class MainMenu extends AppCompatActivity {
         return key;
     }
 
-
     public String genColor(){
         Random random = new Random();
         int color = Color.argb(255, random.nextInt(256),random.nextInt(256),random.nextInt(256));
@@ -183,7 +181,7 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void onClickOpenChk (View view){
-        Intent intent = new Intent(MainMenu.this, RecentProjects.class);
+        Intent intent = new Intent(CreateNewProjectAct.this, RecentProjectsAct.class);
         startActivity(intent);
 
     }

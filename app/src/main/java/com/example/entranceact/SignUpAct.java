@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpAct extends AppCompatActivity {
     private EditText edTextlogin, edTextName, edTextPassword, edTextEmail;
     private DatabaseReference dbUsers;
     private TextView textView3;

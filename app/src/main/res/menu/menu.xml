@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/createNewProject"
+            android:icon="@drawable/ic_baseline_fiber_new_24"
+            android:title="Новый проект">
+
+        </item>
+
+        <item
+            android:id="@+id/connectToProject"
+            android:icon="@drawable/ic_baseline_login_24"
+            android:title="Присоедениться к проекту">
+
+        </item>
+
+        <item
+            android:id="@+id/recetnProjects"
+            android:icon="@drawable/ic_baseline_list_24"
+            android:title="Ваши проекты">
+
+        </item>
+
+
+    </group>
+
+    <item android:title="Настройки">
+        <menu>
+            <item
+                android:id="@+id/settings"
+                android:icon="@drawable/ic_baseline_settings_24"
+                android:title="Настройки"></item>
+
+            <item
+                android:id="@+id/logOut"
+                android:icon="@drawable/ic_baseline_exit_to_app_24"
+                android:title="Выйти"></item>
+
+        </menu>
+    </item>
+
+
+</menu>

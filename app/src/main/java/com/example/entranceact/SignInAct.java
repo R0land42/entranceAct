@@ -1,6 +1,5 @@
 package com.example.entranceact;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,20 +16,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity {
+public class SignInAct extends AppCompatActivity {
     private EditText editTextLogin, editTextTextPassword;
     private DatabaseReference dbUsers;
     private TextView textView4;
-    public static Activity MainActivityContext;
     public static CurentUser curentUser = new CurentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_sign_in);
         getSupportActionBar().hide();
         getWindow().setStatusBarColor(Color.parseColor("#333333"));
-        MainActivityContext = this;
         Init();
     }
 
@@ -41,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         textView4 = findViewById(R.id.textView4);
     }
 
-
     public void onClickEnter(View view){
         String login = editTextLogin.getText().toString();
         String password = Encrypting.sha256(editTextTextPassword.getText().toString());
@@ -49,10 +45,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickSignUpFormOp(View view){
-        Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+        Intent intent = new Intent(SignInAct.this, SignUpAct.class);
         startActivity(intent);
     }
-
 
     public void searchLoginAndPassword(String log, String passwr){
         ValueEventListener vList = new ValueEventListener() {
@@ -66,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     String email = users.email;
                     if (login.equals(log)){
                         if(password.equals(passwr)){
-                            Intent intent = new Intent(MainActivity.this, MainMenu.class);
+                            Intent intent = new Intent(SignInAct.this, CreateNewProjectAct.class);
                             curentUser = new CurentUser(login, name);
                             textView4.setText("");
                             startActivity(intent);
@@ -95,7 +90,10 @@ public class MainActivity extends AppCompatActivity {
         dbUsers.addListenerForSingleValueEvent(vList);
     }
 
-
+    public void onClickChek(View view){
+        Intent intent = new Intent(SignInAct.this, MainMenuAct.class);
+        startActivity(intent);
+    }
 
 
 }

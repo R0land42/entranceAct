@@ -1,6 +1,6 @@
 package com.example.entranceact;
 
-import static com.example.entranceact.MainActivity.curentUser;
+import static com.example.entranceact.SignInAct.curentUser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecentProjects extends AppCompatActivity {
+public class RecentProjectsAct extends AppCompatActivity {
     private ArrayAdapter<String> arrayAdapter;
     private ListView listViewRecentProjects;
     private List<String> listRecetnProjectName, listRecetnProjectKey;
@@ -79,7 +79,7 @@ public class RecentProjects extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String itemProject = listRecetnProjectKey.get(position);
-                Intent intent = new Intent(RecentProjects.this, ChatAct.class);
+                Intent intent = new Intent(RecentProjectsAct.this, ChatAct.class);
                 intent.putExtra(Const.CURENT_PROJECT_KEY, itemProject);
                 startActivity(intent);
             }
