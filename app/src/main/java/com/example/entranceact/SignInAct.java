@@ -61,7 +61,7 @@ public class SignInAct extends AppCompatActivity {
                     String email = users.email;
                     if (login.equals(log)){
                         if(password.equals(passwr)){
-                            Intent intent = new Intent(SignInAct.this, CreateNewProjectAct.class);
+                            Intent intent = new Intent(SignInAct.this, MainMenuAct.class);
                             curentUser = new CurentUser(login, name);
                             textView4.setText("");
                             startActivity(intent);
@@ -91,7 +91,7 @@ public class SignInAct extends AppCompatActivity {
     }
 
     public void onClickChek(View view){
-        Intent intent = new Intent(SignInAct.this, MainMenuAct.class);
+        Intent intent = new Intent(SignInAct.this, ConnectToProjectAct.class);
         startActivity(intent);
     }
 

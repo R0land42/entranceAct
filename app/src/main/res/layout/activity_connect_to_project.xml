@@ -5,25 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainMenuAct"
+    tools:context=".ConnectToProjectAct"
     tools:openDrawer="start"
-    android:id="@+id/nav_mainMenu">
-
+    android:id="@+id/nav_connectToProj">
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#333333"
-        tools:context=".MainMenuAct"
-        >
+        android:background="#333333">
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:id="@+id/mainMenuToolbar"
+            android:id="@+id/connectToProjToolbar"
             android:background="@color/yellow">
         </androidx.appcompat.widget.Toolbar>
 
@@ -39,70 +36,48 @@
                 android:paddingTop="20dp">
 
                 <TextView
-                    android:id="@+id/textViewLogo"
+                    android:id="@+id/textViewLogoConnectToProj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="cursive"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:text="Новый проект"
+                    android:text="Присоедениться к проекту"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
-                    android:textSize="48sp"
-                    android:textStyle="bold" />
+                    android:textSize="40sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
             </TableRow>
 
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:gravity="center">
 
                 <TextView
-                    android:id="@+id/textViewWelcome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:paddingBottom="5dp"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-
-            </TableRow>
-
-
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/textViewEmptyProjectName"
+                    android:id="@+id/textViewProjectKeyError"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:paddingBottom="5dp"
                     android:textAlignment="center"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"></TextView>
 
             </TableRow>
-
 
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingLeft="40dp"
-                android:paddingTop="5dp"
-                android:paddingRight="40dp"
-                android:paddingBottom="5dp">
-
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center">
 
                 <EditText
-                    android:id="@+id/edTextProjectName"
+                    android:id="@+id/edTextProjectKey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -110,64 +85,45 @@
                     android:backgroundTint="@color/gray"
                     android:ems="10"
                     android:gravity="center"
-                    android:hint="Введите название проекта"
-                    android:inputType="textPersonName"
+                    android:hint="Введите ключ проекта"
                     android:paddingBottom="5dp"
                     android:textColor="@color/yellow"
-                    android:textColorHighlight="#FFFFFF" />
+                    android:textColorHighlight="#FFFFFF"></EditText>
+
             </TableRow>
 
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
-
-                <EditText
-                    android:id="@+id/edTextProjectKeyCheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/gray"
-                    android:backgroundTint="@color/gray"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="Генерация ключа проекта"
-                    android:paddingBottom="5dp"
-                    android:textColor="@color/yellow"
-                    android:textColorHighlight="#FFFFFF" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:paddingLeft="40dp"
                 android:paddingTop="10dp"
                 android:paddingRight="40dp">
 
                 <Button
-                    android:id="@+id/btnNewProject"
+                    android:id="@+id/btnConnectToProj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#E1BE0C"
                     android:gravity="center"
-                    android:onClick="onClickStartNewProject"
+                    android:onClick="onClickConnectToProject"
                     android:paddingBottom="5dp"
-                    android:text="Создать проект"
+                    android:text="Присоедениться"
                     android:textColor="#000000"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"></Button>
 
             </TableRow>
+
         </TableLayout>
+
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/navigationDrawer_viewMainMenu"
+        android:id="@+id/navigationDrawer_viewConnectToProj"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/menu"
         android:layout_gravity="start">

@@ -16,7 +16,7 @@
     </ImageView>
 
     <TextView
-        android:id="@+id/menuName"
+        android:id="@+id/textViewMenuName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
