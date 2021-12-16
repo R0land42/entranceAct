@@ -10,6 +10,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +39,8 @@ public class RecentProjectsAct extends AppCompatActivity implements NavigationVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recent_projects);
+        getSupportActionBar().hide();
+        getWindow().setStatusBarColor(Color.parseColor("#333333"));
 
         drawerLayout = findViewById(R.id.nav_recentProj);
         Toolbar toolbar = findViewById(R.id.recentProjToolbar);
@@ -129,7 +132,7 @@ public class RecentProjectsAct extends AppCompatActivity implements NavigationVi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String itemProject = listRecetnProjectKey.get(position);
-                Intent intent = new Intent(RecentProjectsAct.this, ChatAct.class);
+                Intent intent = new Intent(RecentProjectsAct.this, DeskAct.class);
                 intent.putExtra(Const.CURENT_PROJECT_KEY, itemProject);
                 startActivity(intent);
             }

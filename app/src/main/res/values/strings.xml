@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">entranceAct</string>
+    <string name="app_name">CrutchenBan</string>
     <string name="password">Пароль</string>
     <string name="login">Логин</string>
     <string name="signIn">Вход</string>

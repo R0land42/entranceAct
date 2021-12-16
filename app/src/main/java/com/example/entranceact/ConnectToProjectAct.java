@@ -90,62 +90,6 @@ public class ConnectToProjectAct extends AppCompatActivity implements Navigation
         dbUsers = FirebaseDatabase.getInstance().getReference(Const.DB_USERS_REF);
     }
 
-
-   /*public void onClickStartNewProject(View view){
-        projectName = edTextProjectName.getText().toString();
-        if (!TextUtils.isEmpty(projectName)){
-            ValueEventListener vList = new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Boolean chkProjectName = false;
-                    for(DataSnapshot ds : snapshot.getChildren()){
-                        ProjectInfo chekLogAndProjName = ds.getValue(ProjectInfo.class);
-                       // String logChk = chekLogAndProjName.projectCreator;
-                        String projNameChk = chekLogAndProjName.projectName;
-                        if (projectName.equals(projNameChk)){
-                            chkProjectName = true;
-                            break;
-                        }
-                        else{
-                            chkProjectName = false;
-                        }
-
-                    }
-
-                    if(chkProjectName == false){
-                        userColor = genColor();
-                        projectKey = makeProjectKey(projectName,userLogin);
-                        ProjectUsers NewProjectUser = new ProjectUsers(curentUser.curentLog, curentUser.curentName, userColor);
-                        ProjectInfo NewProjectInfo = new ProjectInfo(projectName, projectKey, curentUser.curentLog);
-                        UserProject NewUserProject = new UserProject(projectKey, projectName);
-                        dbProject.child(projectKey).child("UserInDesk").child(curentUser.curentLog).setValue(NewProjectUser);
-                        dbProject.child(projectKey).child("ProjectInfo").setValue(NewProjectInfo);
-                        dbUsers.child(curentUser.curentLog).child("userProjects").child(projectKey).setValue(NewUserProject);
-                        edTextProjectKeyCheck.setText(projectKey);
-                        textViewEmptyProjectName.setText("");
-                    }
-                    else{
-                        textViewEmptyProjectName.setTextColor(Color.parseColor("#FF0000"));
-                        textViewEmptyProjectName.setText("У Вас уже имеется такой проект!");
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            };
-            dbProject.child(makeProjectKey(projectName,userLogin)).addListenerForSingleValueEvent(vList);
-        }
-
-        else{
-            textViewEmptyProjectName.setTextColor(Color.parseColor("#FF0000"));
-            textViewEmptyProjectName.setText("Введите название проекта!");
-        }
-    }
-    */
-
     public void onClickConnectToProject(View view){
         userColor = genColor();
         String projectKeyToConnect = edTextProjectKey.getText().toString();
@@ -172,7 +116,7 @@ public class ConnectToProjectAct extends AppCompatActivity implements Navigation
                             ProjectUsers NewProjectUser = new ProjectUsers(curentUser.curentLog, curentUser.curentName, userColor);
                             dbProject.child(projectKeyToConnect).child("UserInDesk").child(curentUser.curentLog).setValue(NewProjectUser);
                             dbUsers.child(curentUser.curentLog).child("userProjects").child(projectKeyToConnect).setValue(NewUserProject);
-                            Intent intent = new Intent(ConnectToProjectAct.this, ChatAct.class);
+                            Intent intent = new Intent(ConnectToProjectAct.this, DeskAct.class);
                             intent.putExtra(Const.CURENT_PROJECT_KEY, projectKeyToConnect);
                             startActivity(intent);
                     }
@@ -198,11 +142,6 @@ public class ConnectToProjectAct extends AppCompatActivity implements Navigation
         }
     }
 
-    public String makeProjectKey(String projName, String urLogin){
-    String key = Encrypting.sha256(projName+urLogin);
-        return key;
-    }
-
     public String genColor(){
         Random random = new Random();
         int color = Color.argb(255, random.nextInt(256),random.nextInt(256),random.nextInt(256));
@@ -212,11 +151,6 @@ public class ConnectToProjectAct extends AppCompatActivity implements Navigation
 
     }
 
-    public void onClickOpenChk (View view){
-        Intent intent = new Intent(ConnectToProjectAct.this, RecentProjectsAct.class);
-        startActivity(intent);
-
-    }
 
 
 

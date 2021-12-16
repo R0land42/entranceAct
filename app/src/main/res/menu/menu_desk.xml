@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/black">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/currentDesk"
+            android:icon="@drawable/ic_baseline_article_24"
+            android:title="Проект">
+
+        </item>
+
+        <item
+            android:id="@+id/currentChat"
+            android:icon="@drawable/ic_baseline_chat_24"
+            android:title="Чат">
+
+        </item>
+
+        <item
+            android:id="@+id/goToMainMenu"
+            android:icon="@drawable/ic_baseline_menu_24"
+            android:title="Главное меню">
+
+        </item>
+
+
+    </group>
+
+    <item android:title="Настройки">
+        <menu>
+            <item
+                android:id="@+id/settings"
+                android:icon="@drawable/ic_baseline_settings_24"
+                android:title="Настройки"></item>
+
+            <item
+                android:id="@+id/logOut"
+                android:icon="@drawable/ic_baseline_exit_to_app_24"
+                android:title="Выйти"></item>
+
+        </menu>
+    </item>
+</menu>

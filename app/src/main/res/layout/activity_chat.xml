@@ -1,44 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ChatAct"
-    android:orientation="vertical">
+    tools:context=".ChatAct"
+    tools:openDrawer="start"
+    android:id="@+id/nav_Chat">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/reycleViewMessages"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        tools:context="ChatAct"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edTextMessage"
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/ChatToolbar"
+            android:background="@color/yellow">
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reycleViewMessages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Введите сообщение">
-        </EditText>
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnSendMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Отправить"
-            android:onClick="onClickSendMessage">
-        </Button>
+            <EditText
+                android:id="@+id/edTextMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Введите сообщение">
+            </EditText>
+
+            <Button
+                android:id="@+id/btnSendMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Отправить"
+                android:onClick="onClickSendMessage">
+            </Button>
 
 
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/navigationDrawer_viewChat"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/menu_desk"
+        android:layout_gravity="start">
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Timer;
+
 public class SignInAct extends AppCompatActivity {
     private EditText editTextLogin, editTextTextPassword;
     private DatabaseReference dbUsers;
@@ -90,10 +92,5 @@ public class SignInAct extends AppCompatActivity {
         dbUsers.addListenerForSingleValueEvent(vList);
     }
 
-    public void onClickChek(View view){
-        Intent intent = new Intent(SignInAct.this, ConnectToProjectAct.class);
-        startActivity(intent);
-    }
-
-
+    //Timer timer = new Timer();
 }
