@@ -12,11 +12,25 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+
 import com.google.android.material.navigation.NavigationView;
+
+import com.example.entranceact.adapter.ColumnAdapter;
+import com.example.entranceact.data.Entry;
+import com.example.entranceact.data.Item;
+import com.time.cat.dragboardview.DragBoardView;
+import com.time.cat.dragboardview.model.DragColumn;
+import com.time.cat.dragboardview.model.DragItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DeskAct extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
     private String curentProjetKey;
+    private ColumnAdapter mAdapter;
+    DragBoardView dragBoardView;
+    private List<DragColumn> mData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +49,12 @@ public class DeskAct extends AppCompatActivity implements NavigationView.OnNavig
         toggle.syncState();
         NavigationView navigationView = findViewById(R.id.navigationDrawer_viewProjDesk);
         navigationView.setNavigationItemSelectedListener(this);
+
+        dragBoardView = findViewById(R.id.layout_main);
+        mAdapter = new ColumnAdapter(this);
+        mAdapter.setData(mData);
+        dragBoardView.setHorizontalAdapter(mAdapter);
+        getDataAndRefreshView();
     }
 
     @Override
@@ -64,5 +84,16 @@ public class DeskAct extends AppCompatActivity implements NavigationView.OnNavig
         else{
             super.onBackPressed();
         }
+    }
+
+    private void getDataAndRefreshView() {
+        for (int i = 0; i < 3; i++) {
+            List<DragItem> itemList = new ArrayList<>();
+            for (int j = 0; j < 5; j++) {
+                itemList.add(new Item("entry " + i + " item id " + j, "item name " + j, "info " + j));
+            }
+            mData.add(new Entry("entry id " + i, "name " + i, itemList));
+        }
+        mAdapter.notifyDataSetChanged();
     }
 }

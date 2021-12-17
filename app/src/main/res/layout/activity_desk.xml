@@ -17,8 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#333333"
-        tools:context=".DeskAct"
-        >
+        tools:context=".DeskAct">
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
@@ -27,7 +26,11 @@
             android:background="@color/yellow">
         </androidx.appcompat.widget.Toolbar>
 
-
+        <com.time.cat.dragboardview.DragBoardView
+            android:id="@+id/layout_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/projDeskToolbar"/>
 
 
     </RelativeLayout>
