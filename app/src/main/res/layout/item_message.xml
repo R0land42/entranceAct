@@ -2,8 +2,73 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="5dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
+    android:paddingLeft="6dp"
+    android:paddingRight="4dp">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="5dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="4dp"
+        tools:ignore="MissingConstraints"
+        android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        android:background="@drawable/shape"
+        >
+
+        <TextView
+            android:id="@+id/itemMessageUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="User name sample"
+            android:textSize="14dp"
+            android:textColor="@color/black"
+            tools:ignore="MissingConstraints"/>
+
+        <TextView
+            android:id="@+id/itemMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="Message sample"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            tools:ignore="MissingConstraints"/>
+
+    </LinearLayout>
+        <TextView
+            android:id="@+id/itemMessageTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Time sample"
+            android:textSize="9dp"
+            android:textColor="@color/white"
+            tools:ignore="MissingConstraints"/>
+
+    </LinearLayout>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -11,14 +76,6 @@
         android:padding="4dp"
         tools:ignore="MissingConstraints">
 
-        <TextView
-            android:id="@+id/itemMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ебал в рот firebase"
-            android:textSize="24dp"
-            tools:ignore="MissingConstraints"
-            android:background="@drawable/shape"/>
 
     </androidx.cardview.widget.CardView>
 

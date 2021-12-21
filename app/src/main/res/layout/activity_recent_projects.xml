@@ -48,6 +48,7 @@
             <ListView
                 android:id="@+id/listViewRecentProjects"
                 android:orientation="vertical"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 tools:ignore="MissingConstraints">

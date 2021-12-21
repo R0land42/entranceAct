@@ -49,9 +49,6 @@ public class MainMenuAct extends AppCompatActivity implements NavigationView.OnN
         NavigationView navigationView = findViewById(R.id.navigationDrawer_viewMainMenu);
         navigationView.setNavigationItemSelectedListener(this);
 
-        View view = getLayoutInflater().inflate(R.layout.nav_header, null);
-        textViewMenuName = (TextView) view.findViewById(R.id.textViewMenuName);
-        textViewMenuName.setText("Капитан Залупа");
         Init();
     }
 

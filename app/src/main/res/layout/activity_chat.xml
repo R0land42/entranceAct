@@ -28,7 +28,8 @@
             android:id="@+id/reycleViewMessages"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="#333333"/>
 
 
         <LinearLayout
@@ -40,7 +41,11 @@
                 android:id="@+id/edTextMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Введите сообщение">
+                android:textSize="20sp"
+                android:hint="Введите сообщение"
+                android:textColor="@color/white"
+                android:background="@color/gray"
+                android:backgroundTint="@color/gray">
             </EditText>
 
             <Button
@@ -48,7 +53,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Отправить"
-                android:onClick="onClickSendMessage">
+                android:textColor="@color/white"
+                android:onClick="onClickSendMessage"
+                android:backgroundTint="@color/yellow">
             </Button>
 
 

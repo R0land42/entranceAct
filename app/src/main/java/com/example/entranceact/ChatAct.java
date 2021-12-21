@@ -28,15 +28,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class ChatAct extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private EditText edTextMessage;
     private DatabaseReference dbChat;
     private String curentProjetKey;
     private ArrayList<String> messages  = new ArrayList<>();
+    private ArrayList<String> userNames  = new ArrayList<>();
+    private ArrayList<String> timeMessages  = new ArrayList<>();
     private RecyclerView reycleViewMessages;
     private DrawerLayout drawerLayout;
+
+
 
 
 
@@ -46,6 +54,8 @@ public class ChatAct extends AppCompatActivity implements NavigationView.OnNavig
         setContentView(R.layout.activity_chat);
         getSupportActionBar().hide();
         getWindow().setStatusBarColor(Color.parseColor("#333333"));
+
+
 
         Init();
         drawerLayout = findViewById(R.id.nav_Chat);
@@ -73,6 +83,11 @@ public class ChatAct extends AppCompatActivity implements NavigationView.OnNavig
                 Intent intentMainMenu = new Intent(this, MainMenuAct.class);
                 startActivity(intentMainMenu);
                 break;
+
+            case R.id.logOut:
+                Intent intentLogOut = new Intent(this,SignInAct.class);
+                startActivity(intentLogOut);
+                break;
         }
 
         return true;
@@ -93,17 +108,22 @@ public class ChatAct extends AppCompatActivity implements NavigationView.OnNavig
         curentProjetKey = intent.getStringExtra(Const.CURENT_PROJECT_KEY);
         edTextMessage = findViewById(R.id.edTextMessage);
         dbChat = FirebaseDatabase.getInstance().getReference(Const.DB_PROJECT_REF);
+
+
+
+
         reycleViewMessages = findViewById(R.id.reycleViewMessages);
         reycleViewMessages.setLayoutManager(new LinearLayoutManager(this));
-        DataAdapterForMessages dataAdapterForMessages = new DataAdapterForMessages(this, messages);
+        DataAdapterForMessages dataAdapterForMessages = new DataAdapterForMessages(this, messages, userNames, timeMessages);
         reycleViewMessages.setAdapter(dataAdapterForMessages);
         dbChat.child(curentProjetKey).child("ProjectZChat").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                String msg = snapshot.getValue(String.class);
-                messages.add(msg);
+                MessageInfo msgInfo = snapshot.getValue(MessageInfo.class);
+                messages.add(msgInfo.msg);
+                userNames.add(msgInfo.name);
+                timeMessages.add(msgInfo.time);
                 dataAdapterForMessages.notifyDataSetChanged();
-                reycleViewMessages.scrollToPosition(messages.size());
             }
 
             @Override
@@ -131,7 +151,12 @@ public class ChatAct extends AppCompatActivity implements NavigationView.OnNavig
 
     public void onClickSendMessage(View view){
         String msg = edTextMessage.getText().toString();
-        String msgTosend = curentUser.curentName + "(" + curentUser.curentLog + ")" + System.getProperty ("line.separator") + msg;
+        Date currentDate = new Date();
+        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        String time = timeFormat.format(currentDate);
+        String name = curentUser.curentName;
+        MessageInfo messageInfo = new MessageInfo(msg, name, time);
+
         if (TextUtils.isEmpty(msg)){
             Toast.makeText(this, "Введите сообщение", Toast.LENGTH_SHORT).show();
             return;
@@ -140,8 +165,9 @@ public class ChatAct extends AppCompatActivity implements NavigationView.OnNavig
             Toast.makeText(this, "Слишком больше сообщение", Toast.LENGTH_SHORT).show();
             return;
         }
-        dbChat.child(curentProjetKey).child("ProjectZChat").push().setValue(msgTosend);
+        dbChat.child(curentProjetKey).child("ProjectZChat").push().setValue(messageInfo);
         edTextMessage.setText("");
+        reycleViewMessages.smoothScrollToPosition(messages.size());
     }
 
 

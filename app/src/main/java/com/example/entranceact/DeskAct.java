@@ -1,5 +1,7 @@
 package com.example.entranceact;
 
+import static com.example.entranceact.SignInAct.curentUser;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +20,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.example.entranceact.adapter.ColumnAdapter;
 import com.example.entranceact.data.Entry;
 import com.example.entranceact.data.Item;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.time.cat.dragboardview.DragBoardView;
 import com.time.cat.dragboardview.model.DragColumn;
 import com.time.cat.dragboardview.model.DragItem;
@@ -27,10 +34,12 @@ import java.util.List;
 
 public class DeskAct extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
-    private String curentProjetKey;
+    public static String curentProjetKey;
+    private DatabaseReference dbProject;
     private ColumnAdapter mAdapter;
     DragBoardView dragBoardView;
     private List<DragColumn> mData = new ArrayList<>();
+    int id =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,8 @@ public class DeskAct extends AppCompatActivity implements NavigationView.OnNavig
 
         Intent intent = getIntent();
         curentProjetKey = intent.getStringExtra(Const.CURENT_PROJECT_KEY);
+
+        dbProject = FirebaseDatabase.getInstance().getReference(Const.DB_PROJECT_REF);
 
         drawerLayout = findViewById(R.id.nav_projDesk);
         Toolbar toolbar = findViewById(R.id.projDeskToolbar);
@@ -54,7 +65,7 @@ public class DeskAct extends AppCompatActivity implements NavigationView.OnNavig
         mAdapter = new ColumnAdapter(this);
         mAdapter.setData(mData);
         dragBoardView.setHorizontalAdapter(mAdapter);
-        getDataAndRefreshView();
+        //getDataAndRefreshView();
     }
 
     @Override
@@ -71,6 +82,11 @@ public class DeskAct extends AppCompatActivity implements NavigationView.OnNavig
                 Intent intentMainMenu = new Intent(this, MainMenuAct.class);
                 startActivity(intentMainMenu);
                 break;
+
+            case R.id.logOut:
+                Intent intentLogOut = new Intent(this,SignInAct.class);
+                startActivity(intentLogOut);
+                break;
         }
 
         return true;
@@ -86,14 +102,43 @@ public class DeskAct extends AppCompatActivity implements NavigationView.OnNavig
         }
     }
 
-    private void getDataAndRefreshView() {
-        for (int i = 0; i < 3; i++) {
+    /*private void getDataAndRefreshView() {
+        //List<DragItem> itemList = new ArrayList<>();
+        for (int i = 0; i < 1; i++) {
             List<DragItem> itemList = new ArrayList<>();
-            for (int j = 0; j < 5; j++) {
+            //itemList = new ArrayList<>();
+            id = i;
+            for (int j = 0; j < 3; j++) {
                 itemList.add(new Item("entry " + i + " item id " + j, "item name " + j, "info " + j));
             }
-            mData.add(new Entry("entry id " + i, "name " + i, itemList));
+
+            //Добавить eventListener для отправки и считывания данных
+            //Добавить код для отправки
+            //добавить код для получения
+            //Полученный лист отправлять в mData
+            //itemList = new ArrayList<>();
+
+            Entry entry = new Entry("entry id "+ i, "name " + i, itemList);
+
+            ValueEventListener vList = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    dbProject.child(curentProjetKey).child("DeskInfo").child("columnID " + id).setValue(entry);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            };
+
+
+            //mData.add(new Entry("entry id " + i, "name " + i, itemList));
+            mData.add(entry);
+            dbProject.child(curentProjetKey).addListenerForSingleValueEvent(vList);
         }
         mAdapter.notifyDataSetChanged();
     }
+    */
+
 }
