@@ -49,6 +49,9 @@ public class MainMenuAct extends AppCompatActivity implements NavigationView.OnN
         NavigationView navigationView = findViewById(R.id.navigationDrawer_viewMainMenu);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View view = getLayoutInflater().inflate(R.layout.nav_header, null);
+        textViewMenuName = (TextView) view.findViewById(R.id.textViewMenuName);
+        textViewMenuName.setText("Капитан Залупа");
         Init();
     }
 
@@ -122,8 +125,8 @@ public class MainMenuAct extends AppCompatActivity implements NavigationView.OnN
                         ProjectUsers NewProjectUser = new ProjectUsers(curentUser.curentLog, curentUser.curentName, userColor);
                         ProjectInfo NewProjectInfo = new ProjectInfo(projectName, projectKey, curentUser.curentLog);
                         UserProject NewUserProject = new UserProject(projectKey, projectName);
+                        dbProject.child(projectKey).setValue(NewProjectInfo);
                         dbProject.child(projectKey).child("UserInDesk").child(curentUser.curentLog).setValue(NewProjectUser);
-                        dbProject.child(projectKey).child("ProjectInfo").setValue(NewProjectInfo);
                         dbUsers.child(curentUser.curentLog).child("userProjects").child(projectKey).setValue(NewUserProject);
                         edTextProjectKeyCheck.setText(projectKey);
                         textViewEmptyProjectName.setText("");
